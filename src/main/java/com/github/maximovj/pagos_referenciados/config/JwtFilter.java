@@ -29,6 +29,13 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getServletPath();
+
+        // Saltar la validación para endpoints públicos
+        if (path.equals("/h2-console")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // Saltar la validación para endpoints públicos
         if (path.equals("/v1/authenticate")) {
             filterChain.doFilter(request, response);
