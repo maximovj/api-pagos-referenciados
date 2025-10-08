@@ -52,6 +52,7 @@ class PaymentControllerTest {
         p1.setAmount(1500.0);
         p1.setDescription("Pago de servicio A");
         p1.setReference("PRV3E9352BE0F1A4C99A92B17B5438");
+        p1.setAuthorizationNumber("456789");
         p1.setStatus("01");
         p1.setCreationDate(LocalDateTime.now().minusDays(2));
         p1.setPaymentDate(LocalDateTime.now().minusDays(1));
@@ -63,6 +64,7 @@ class PaymentControllerTest {
         p2.setAmount(2000.0);
         p2.setDescription("Pago de servicio B");
         p2.setReference("PRV4B7352BE0F1A4C00A92B17B5438");
+        p2.setAuthorizationNumber("678123");
         p2.setStatus("02");
         p2.setCreationDate(LocalDateTime.now());
         p2.setPaymentDate(LocalDateTime.now());
@@ -74,6 +76,7 @@ class PaymentControllerTest {
         p3.setAmount(2300.0);
         p3.setDescription("Pago de servicio C");
         p3.setReference("PRV5C8352BE0F1A4C55A92B17B5438");
+        p3.setAuthorizationNumber("789801");
         p3.setStatus("01");
         p3.setCreationDate(LocalDateTime.now());
         p3.setPaymentDate(LocalDateTime.now());
@@ -197,6 +200,8 @@ class PaymentControllerTest {
 
         PaymentCallBackRequest request = new PaymentCallBackRequest();
         request.setPaymentId(payment.getPaymentId());
+        request.setAmount(payment.getAmount());
+        request.setPaymentDate(payment.getPaymentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         request.setReference(payment.getReference());
         request.setExternalId(payment.getExternalId());
         request.setAuthorizationNumber(payment.getAuthorizationNumber());
