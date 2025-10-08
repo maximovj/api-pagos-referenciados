@@ -10,12 +10,15 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +46,9 @@ public class PaymentService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${jwt.app.token}")
+    private String appToken;
 
     // ! Creación de Pago Referenciado
     public ResponseEntity<ApiResponse> savePayment(PaymentRequest request) {
@@ -107,10 +113,21 @@ public class PaymentService {
         int maxAttempts = 10;
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
+
+                // Crea los headers y agrega el Bearer token
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.set("Authorization", "Bearer " + this.appToken);
+
+                // Crea la entidad con payload + headers
+                HttpEntity<Map<String, Object>> entity = new HttpEntity<>(payload, headers);
+
+                // Envía la solicitud POST
                 ResponseEntity<Map> response = restTemplate.postForEntity(
                         payment.getCallbackURL(),
-                        payload,
-                        Map.class);
+                        entity,
+                        Map.class
+                );
 
                 Map<String, Object> body = response.getBody();
                 if (body != null && "ACK".equals(body.get("status"))) {

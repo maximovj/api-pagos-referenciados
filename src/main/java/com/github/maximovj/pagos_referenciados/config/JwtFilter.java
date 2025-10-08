@@ -42,11 +42,6 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (path.equals("/v1/payment/callback")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         String authHeader = request.getHeader("Authorization");
 
         String token = authHeader.substring(7);
