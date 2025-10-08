@@ -23,7 +23,6 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/v1/authenticate").permitAll()  // endpoint sin token
-            .requestMatchers("/v1/payment/callback").permitAll()  // endpoint sin token
             .requestMatchers("/h2-console/**").permitAll()   // permite H2 console
             .anyRequest().authenticated()
             .and()
