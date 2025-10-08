@@ -13,7 +13,7 @@ import com.github.maximovj.pagos_referenciados.response.ApiResponse;
 import com.github.maximovj.pagos_referenciados.service.AuthService;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/api/v1")
 @Validated
 public class AuthController {
 
