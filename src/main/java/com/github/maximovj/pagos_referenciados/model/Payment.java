@@ -66,16 +66,20 @@ public class Payment {
         this.updatedAt = LocalDateTime.now();
         this.paymentDate = LocalDateTime.now();
 
-        String reference = "PRV" + UUID.randomUUID()
-                .toString()
-                .replace("-", "")
-                .substring(0, 27)
-                .toUpperCase();
-        this.reference = reference;
+        if (this.reference == null) { // <- solo generar si no existe
+            String reference = "PRV" + UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 27)
+                    .toUpperCase();
+            this.reference = reference;
+        }
 
         Random random = new Random();
-        int authorizationNumber = 100000 + random.nextInt(900000); // 100000-999999
-        this.authorizationNumber = String.valueOf(authorizationNumber);
+        if (this.authorizationNumber == null) {
+            int authorizationNumber = 100000 + random.nextInt(900000); // 100000-999999
+            this.authorizationNumber = String.valueOf(authorizationNumber);
+        }
 
         // int externalId = 10000 + random.nextInt(90000); // 100000-999999
         // this.externalId = "ORD-" + externalId;
