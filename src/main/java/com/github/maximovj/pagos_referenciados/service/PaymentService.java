@@ -205,6 +205,7 @@ public class PaymentService {
     public ResponseEntity<ApiResponse> updatePayment(@Valid PaymentCancelRequest request) {
 
         Optional<Payment> paymentOpt = paymentRepository.findByReference(request.getReference());
+        
         if (paymentOpt.isEmpty()) {
             return this.buildError(HttpStatus.NOT_FOUND.value(), "Payment not found");
         }
