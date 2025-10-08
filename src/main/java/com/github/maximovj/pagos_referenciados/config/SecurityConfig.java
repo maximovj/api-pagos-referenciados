@@ -22,7 +22,7 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
-            .requestMatchers("/v1/authenticate").permitAll()  // endpoint sin token
+            .requestMatchers("/api/v1/authenticate").permitAll()  // endpoint sin token
             .requestMatchers("/h2-console/**").permitAll()   // permite H2 console
             .anyRequest().authenticated()
             .and()

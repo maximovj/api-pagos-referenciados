@@ -37,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // Saltar la validación para endpoints públicos
-        if (path.equals("/v1/authenticate")) {
+        if (path.equals("/api/v1/authenticate")) {
             filterChain.doFilter(request, response);
             return;
         }
