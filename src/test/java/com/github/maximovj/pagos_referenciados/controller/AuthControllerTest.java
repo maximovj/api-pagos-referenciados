@@ -83,13 +83,14 @@ class AuthControllerTest {
                 .thenReturn(ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse));
         
         AuthRequest req = new AuthRequest();
-        req.setUsername("test");
-        req.setPassword("pass");
+        req.setUsername("");
+        req.setPassword("");
 
         mockMvc.perform(post("/api/v1/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.response_code").value(400))
                 .andExpect(jsonPath("$.response_message").value("Authentication failed"));
     }
 }

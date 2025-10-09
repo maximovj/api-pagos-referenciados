@@ -45,17 +45,21 @@ class AuthServiceTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertEquals(200, response.getBody().getResponse_code());
         assertEquals("Authentication successful", response.getBody().getResponse_message());
         assertTrue(((Map<String, Object>)response.getBody().getData()).containsKey("token"));
     }
 
     @Test
     void testGenerateToken_Failure() {
-        AuthRequest request = new AuthRequest("wrongUser", "wrongPass");
+        AuthRequest request = new AuthRequest();
+        request.setUsername("username");
+        request.setPassword("password");
 
         ResponseEntity<ApiResponse> response = authService.generateToken(request);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(400, response.getBody().getResponse_code());
         assertEquals("Authentication failed", response.getBody().getResponse_message());
         assertNull(response.getBody().getData());
     }

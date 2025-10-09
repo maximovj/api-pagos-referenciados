@@ -40,7 +40,7 @@ public class AuthService {
                     .data(null)
                     .build();
 
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         String token = jwt.generateToken(request.getUsername());
